@@ -1,24 +1,36 @@
 import React, { useEffect, useState } from "react";
 import { Form, Button, Modal, Table } from "antd";
 import { LeftOutlined } from "@ant-design/icons";
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 export default function ToDoOverTime() {
-    const upperLeavel = useLocation().state.record;
+    let navigate = useNavigate();
+    const [state] = useState({
+        processnumber: useLocation().state.record.processnumber,
+        requestname: useLocation().state.record.requestname,
+        requestid: useLocation().state.record.requestid,
+    });
     const [form] = Form.useForm();
     const [rejectList, setRejectList] = useState([]);
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-    const [doConfirmVisable, setDoConfirmVisable] = useState(false);
-    const [doRejectVisable, setDoRejectVisable] = useState(false);
-    const [state] = useState({
-        processnumber: upperLeavel.processnumber,
-        requestname: upperLeavel.requestname,
-        requestid: upperLeavel.requestid,
-    });
+    const [doConfirmVisible, setDoConfirmVisible] = useState(false);
+    const [doRejectVisible, setDoRejectVisible] = useState(false);
+    const [doApiCall, setDoApiCall] = useState(false);
+    const rejectColumns = [
+        {
+            title: '節點名稱',
+            dataIndex: 'tonodename',
+            key: 'tonodename',
+        },
+        {
+            title: '操作者',
+            dataIndex: 'tousername',
+            key: 'tousername',
+        },
+    ];
 
     const onSelectChange = selectedRowKeys => {
-        console.log('selectedRowKeys changed: ', selectedRowKeys);
         setSelectedRowKeys(selectedRowKeys);
     };
 
@@ -28,80 +40,57 @@ export default function ToDoOverTime() {
         onChange: onSelectChange,
     };
 
-    const rejectColumns = [
-        {
-            title: '節點名稱',
-            dataIndex: 'nodename',
-            key: 'nodename',
-        },
-        {
-            title: '操作者',
-            dataIndex: 'lastname',
-            key: 'lastname',
-            render: (_, record) => record.user.map((user) => user.lastname).join(', '),
-        },
-    ];
-
-    const data = [
-        {
-            "nodename": "創建",
-            "key": "0",
-            "user": [
-                {
-                    "userid": "29",
-                    "lastname": "Rogers"
-                }
-            ]
-        },
-        {
-            "nodename": "項目負責人",
-            "key": "1",
-            "user": [
-                {
-                    "userid": "1381",
-                    "lastname": "OA_OP3"
-                },
-                {
-                    "userid": "1411",
-                    "lastname": "OAteam"
-                },
-                {
-                    "userid": "2153",
-                    "lastname": "OA_OP4"
-                },
-            ]
-        }
-    ]
-
     function doConfirm() {
-        setDoConfirmVisable(true);
+        setDoConfirmVisible(true);
     }
+
     function handleConfirmOk() {
-        setDoConfirmVisable(false);
+        setDoConfirmVisible(false);
     }
 
     function handleConfirmCancel() {
-        setDoConfirmVisable(false);
-    }
-    function doReject() {
-        setDoRejectVisable(true);
+        setDoConfirmVisible(false);
     }
 
-    function handleRejectOk() {
-        setDoRejectVisable(false);
+    function doReject() {
+        setDoRejectVisible(true);
+    }
+
+    const handleRejectOk = async () => {
+        const rejectConfig = {
+            method: 'post',
+            url: 'http://127.0.0.1:8082/api/workflow/doReject',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            data: JSON.stringify({
+                "tgId": "5173339107",
+                "requestId": state.requestid,
+                "workflowid": rejectList[selectedRowKeys[0]].workflowid,
+                "nownodeid": rejectList[selectedRowKeys[0]].nownodeid,
+                "tonodeid": rejectList[selectedRowKeys[0]].tonodeid,
+                "tonodename": rejectList[selectedRowKeys[0]].tonodename,
+                "receivedate": rejectList[selectedRowKeys[0]].receivedate,
+                "receivetime": rejectList[selectedRowKeys[0]].receivetime,
+            })
+        }
+        await axios.request(rejectConfig)
+            .then((rejectResponse) => {
+                console.log(JSON.stringify(rejectResponse.data.result));
+            })
+            .catch((error) => {
+                alert(error);
+            });
+        navigate('/todo/');
     }
 
     function handleRejectCancel() {
-        setDoRejectVisable(false);
+        setDoRejectVisible(false);
+        setSelectedRowKeys([]);
     }
 
-    useEffect(() => {
-        //暫時，調欄位資料api開放後改為放api
-        document.getElementById("requestname").value = state.requestname;
-        document.getElementById("processnumber").value = state.processnumber;
-
-        // 退回api
-        let config = {
+    const fetchData = async () => {
+        const config = {
             method: 'post',
             url: 'http://127.0.0.1:8082/api/workflow/getRejectList',
             headers: {
@@ -112,21 +101,29 @@ export default function ToDoOverTime() {
                 "requestId": state.requestid,
             })
         };
-        axios.request(config)
+        await axios.request(config)
             .then((response) => {
-                const resultId = response.data.result;
-                setRejectList(
-                    resultId.map(row => ({
-                        tonodeid: row.tonodeid,
-                    })))
+                const rawdata = response.data.result;
+                const newData = rawdata.map((item, index) => {
+                    return {
+                        ...item,
+                        key: index
+                    };
+                });
+                setRejectList(newData);
             })
             .catch((error) => {
                 alert(error);
             });
+        setDoApiCall(true);
+    }
+
+    useEffect(() => {
+        document.getElementById("requestname").value = state.requestname;
+        document.getElementById("processnumber").value = state.processnumber;
+        fetchData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-
-
+    }, [doApiCall])
 
     return (
         <div className="content">
@@ -135,21 +132,20 @@ export default function ToDoOverTime() {
                     <LeftOutlined />
                 </Link>
             </div>
-            <Form form={form}>
+            <Form form={form} className="form-container">
                 <Form.Item label="流程標題">
                     <input type="text" id="requestname" name="requestname" disabled />
                 </Form.Item>
                 <Form.Item label="流程編號">
                     <input type="text" id="processnumber" name="processnumber" disabled />
                 </Form.Item>
-                加班待辦
-                <div>
-                    <Button onClick={doConfirm}>批准</Button>
-                    <Button onClick={doReject}>退回</Button>
+                <div className="overtime-todo">
+                    <Button onClick={doConfirm} className="action-button">批准</Button>
+                    <Button onClick={doReject} className="action-button">退回</Button>
                 </div>
                 <div>
                     <Modal
-                        open={doConfirmVisable}
+                        open={doConfirmVisible}
                         title="批准"
                         onOk={handleConfirmOk}
                         onCancel={handleConfirmCancel}
@@ -165,7 +161,7 @@ export default function ToDoOverTime() {
                         是否批准通過
                     </Modal>
                     <Modal
-                        open={doRejectVisable}
+                        open={doRejectVisible}
                         title="退回"
                         onOk={handleRejectOk}
                         onCancel={handleRejectCancel}
@@ -173,7 +169,7 @@ export default function ToDoOverTime() {
                             <Button key="back" onClick={handleRejectCancel}>
                                 Return
                             </Button>,
-                            <Button key="submit" type="primary" onClick={handleRejectOk}>
+                            <Button key="submit" type="primary" id="rejectSubmit" onClick={handleRejectOk}>
                                 Submit
                             </Button>,
                         ]}
@@ -181,12 +177,11 @@ export default function ToDoOverTime() {
                         <Table
                             rowSelection={rowSelection}
                             columns={rejectColumns}
-                            dataSource={data}
+                            dataSource={rejectList}
                         />
                     </Modal>
                 </div>
             </Form>
-
         </div>
     );
-};
+}
