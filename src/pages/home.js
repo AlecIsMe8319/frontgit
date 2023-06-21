@@ -9,6 +9,9 @@ const Home = () => {
                 <Button type="primary" onClick={() => navigate('/todo', { state: { record: 0 } })}>待辦事項</Button>
             </div>
             <div className="button-container">
+                <Button type="primary" onClick={() => navigate('/done', { state: { record: 0 } })}>已辦事項</Button>
+            </div>
+            <div className="button-container">
                 <Button type="primary" onClick={() => navigate('/testmoney', { state: { record: 0 } })}>申請測試金</Button>
             </div>
             <div className="button-container">

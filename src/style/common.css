@@ -1,0 +1,25 @@
+#Content-Header {
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    flex-basis: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#Content-Header-Title {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#Content-Foot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+}

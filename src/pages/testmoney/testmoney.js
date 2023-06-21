@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { Form } from "antd";
-import { LeftOutlined } from "@ant-design/icons";
+import React, { useEffect, useState, useContext } from "react";
+import { Form, Card } from "antd";
+import { ArrowLeftOutlined, BulbOutlined } from "@ant-design/icons";
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { IdContext } from "../../index";
 
 const TestMoney = () => {
     let navigate = useNavigate();
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(true);
+    const tgId = useContext(IdContext);
 
     useEffect(() => {
         setLoading(false);
@@ -24,7 +26,7 @@ const TestMoney = () => {
             // "tgId": "5173339107",
 
             //pie
-            "tgId": "1026209521",
+            "tgId": tgId,
             "account": testaccount,
             "price": price,
             "remark": note,
@@ -53,37 +55,48 @@ const TestMoney = () => {
     }
 
     return (
-        <div className="content" >
-            {loading ? (
-                "Loading"
-            ) : (
-                <Form form={form} >
-                    <div >
-                        <Link to="/">
-                            <LeftOutlined />
-                        </Link>
-                    </div>
-                    <Form.Item label="申请测式金类别">
-                        <select id="testtype" name="testtype">
-                            <option value=" "></option>
-                            <option value="0">彩票测试金</option>
-                            <option value="1">三方场馆测试金</option>
-                        </select>
-                    </Form.Item>
-                    <Form.Item label="試玩帳號">
-                        <input type="text" id="testaccount" name="testaccount" />
-                    </Form.Item>
-                    <Form.Item label="金額">
-                        <input type="text" id="amount" name="amount" />
-                    </Form.Item>
-                    <Form.Item label="備註">
-                        <input type="text" id="note" name="note" />
-                    </Form.Item>
-                    <div >
-                        <button onClick={createPost}>Submit</button>
-                    </div>
-                </Form>
-            )}
+        <div className="Content" id="Content">
+            <div id="Content-Header">
+                <div className="icon" id="Content-Header-Arrow">
+                    <Link to="/">
+                        <ArrowLeftOutlined />
+                    </Link>
+                </div>
+                <div id="Content-Header-Title">
+                    <h3>申请测试金</h3>
+                </div>
+                <div className="icon" id="Content-Header-Bulb">
+                    <BulbOutlined />
+                </div>
+
+            </div>
+            <div id="Content-Body">
+                {loading ? (
+                    <Card loading={true} />
+                ) : (
+                    <Form form={form} >
+                        <Form.Item label="申请测式金类别">
+                            <select id="testtype" name="testtype">
+                                <option value=" "></option>
+                                <option value="0">彩票测试金</option>
+                                <option value="1">三方场馆测试金</option>
+                            </select>
+                        </Form.Item>
+                        <Form.Item label="試玩帳號">
+                            <input type="text" id="testaccount" name="testaccount" />
+                        </Form.Item>
+                        <Form.Item label="金額">
+                            <input type="text" id="amount" name="amount" />
+                        </Form.Item>
+                        <Form.Item label="備註">
+                            <input type="text" id="note" name="note" />
+                        </Form.Item>
+                        <div >
+                            <button onClick={createPost}>Submit</button>
+                        </div>
+                    </Form>
+                )}
+            </div>
         </div>
     );
 };

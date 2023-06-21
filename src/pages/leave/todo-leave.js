@@ -1,8 +1,7 @@
 import React from "react";
 import { Form } from "antd";
-import { LeftOutlined } from "@ant-design/icons";
+import { ArrowLeftOutlined } from "@ant-design/icons";
 import { Link } from 'react-router-dom';
-// import axios from 'axios';
 
 const TodoLeave = () => {
     const [form] = Form.useForm();
@@ -10,7 +9,7 @@ const TodoLeave = () => {
         <div className="content">
             <div>
                 <Link to="/todo">
-                    <LeftOutlined />
+                    <ArrowLeftOutlined />
                 </Link>
             </div>
             <Form form={form}>
