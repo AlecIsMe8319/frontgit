@@ -1,0 +1,36 @@
+/* styles/index.css */
+
+/* Reset some default styles for better consistency */
+body,
+h1,
+h2,
+h3,
+p,
+ul,
+li {
+    margin: 0;
+    padding: 0;
+}
+
+/* Apply a global font and background color */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+/* Style for the App-header */
+.App-header {
+    background-color: #0070c1;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+.App-header h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.App-header p {
+    font-size: 16px;
+}
