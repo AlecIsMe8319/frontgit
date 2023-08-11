@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { LoadingOutlined } from "@ant-design/icons";
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Table, Card } from 'antd';
 import axios from "axios";
 import IdContext from "../utils/IdContext";
