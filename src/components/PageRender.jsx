@@ -1,13 +1,16 @@
 import React from 'react';
 
-import Portal from '../pages/Portal';
+import Create from '../pages/Create';
 import Todo from '../pages/Todo';
 import Done from '../pages/Done';
+import F323 from '../pages/F323';
+
 
 const pageComponents = {
     todo: <Todo />,
     done: <Done />,
-    portal: <Portal />,
+    create: <Create />,
+    f323: <F323 />
 }
 
 function PageRender({ openPage }) {

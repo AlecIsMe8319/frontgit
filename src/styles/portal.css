@@ -1,0 +1,29 @@
+.portal {
+    height: 100vh;
+    width: auto;
+}
+
+.portal-space {
+    background-color: gray;
+    height: 1vh;
+    width: auto;
+}
+
+.portal-main {
+    height: 98vh;
+    width: auto;
+}
+
+.category {
+    font-weight: bold;
+    color: #333;
+}
+
+.ant-menu {
+    background: #f5f5f5;
+}
+
+.ant-menu-item {
+    padding: 5px 10px;
+    font-size: 12px;
+}

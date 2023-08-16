@@ -1,0 +1,42 @@
+{
+    "flows": [
+        {
+            "categorys": "人事管理类",
+            "subitem": [
+                {
+                    "name": "01.请假申请流程",
+                    "flowid": "709"
+                },
+                {
+                    "name": "02.加班申请流程",
+                    "flowid": "323"
+                }
+            ]
+        },
+        {
+            "categorys": "财务管理类",
+            "subitem": []
+        },
+        {
+            "categorys": "市场采购类",
+            "subitem": []
+        },
+        {
+            "categorys": "运营业务流程",
+            "subitem": [
+                {
+                    "name": "01.申请测试金",
+                    "flowid": "799"
+                },
+                {
+                    "name": "02.申请冻结/解冻用户",
+                    "flowid": "810"
+                },
+                {
+                    "name": "03.申请调整玩家场馆限红",
+                    "flowid": "819"
+                }
+            ]
+        }
+    ]
+}

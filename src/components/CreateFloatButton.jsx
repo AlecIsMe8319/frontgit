@@ -1,6 +1,6 @@
 import React from 'react';
 import { FloatButton } from 'antd';
-import { FileTextOutlined, HomeOutlined } from '@ant-design/icons';
+import { FileTextOutlined, PlusOutlined } from '@ant-design/icons';
 
 
 function CreateFloatButton({ onPageOpen }) {
@@ -11,8 +11,8 @@ function CreateFloatButton({ onPageOpen }) {
     function doCallDone() {
         onPageOpen("done");
     }
-    function doCallPortal() {
-        onPageOpen("portal");
+    function doCallCreate() {
+        onPageOpen("create");
     }
     return (
         <FloatButton.Group>
@@ -33,10 +33,10 @@ function CreateFloatButton({ onPageOpen }) {
                 onClick={doCallDone}>
             </FloatButton>
             <FloatButton
-                icon={<HomeOutlined />}
-                description="Home"
+                icon={<PlusOutlined />}
+                description="Create"
                 shape="square"
-                onClick={doCallPortal}>
+                onClick={doCallCreate}>
             </FloatButton>
         </FloatButton.Group>
     )
