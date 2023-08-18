@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Menu } from 'antd';
+
 function getItem(label, key, children, type) {
     return {
         key,
@@ -8,6 +9,7 @@ function getItem(label, key, children, type) {
         type,
     };
 }
+
 const items = [
     getItem('人事管理类', 'sub1', [
         getItem('01.请假申请流程', '709'),
@@ -26,9 +28,8 @@ const items = [
     ]),
 ];
 
-// submenu keys of first level
 const rootSubmenuKeys = ['sub1', 'sub2', 'sub3', 'sub4'];
-const Create = () => {
+function Create({ openCreatePage }) {
     const [openKeys, setOpenKeys] = useState(['sub1']);
     const onOpenChange = (keys) => {
         const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
@@ -38,8 +39,8 @@ const Create = () => {
             setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
         }
     };
-    const onClickPage = (keys) => {
-        console.log("click" + keys);
+    const onClickPage = ({ key }) => {
+        openCreatePage("f" + key);
     }
     return (
         <div id="create">

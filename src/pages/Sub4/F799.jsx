@@ -3,7 +3,7 @@ import React from "react";
 
 function F799() {
     return (
-        <div>F799</div>
+        <div>申请测试金</div>
     );
 }
 
