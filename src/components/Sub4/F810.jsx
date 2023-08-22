@@ -1,10 +1,10 @@
 /* 凍結/解凍流程 */
 import React from "react";
 
-function F809() {
+function F810() {
     return (
-        <div>F809</div>
+        <div>凍結/解凍流程</div>
     );
 }
 
-export default F809;
+export default F810;

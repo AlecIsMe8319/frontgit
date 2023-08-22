@@ -150,7 +150,7 @@
 //                         onRow={(record) => {
 //                             return {
 //                                 onClick: () => {
-//                                     navigate('/todo/' + record.workflowid, { state: { record: record } });
+//                                     navigate('/f' + record.workflowid, { state: { record: record } });
 //                                 }
 //                             };
 //                         }}
@@ -167,6 +167,8 @@
 //         </div>
 //     );
 // };
+
+import React from "react";
 
 function Todo() {
     return (

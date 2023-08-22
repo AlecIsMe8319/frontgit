@@ -1,36 +1,38 @@
 import React, { useState } from 'react';
 import { Menu } from 'antd';
+import { useNavigate } from 'react-router-dom';
+function Create() {
+    function getItem(label, key, children, type) {
+        return {
+            key,
+            children,
+            label,
+            type,
+        };
+    }
 
-function getItem(label, key, children, type) {
-    return {
-        key,
-        children,
-        label,
-        type,
-    };
-}
+    const items = [
+        getItem('人事管理类', 'sub1', [
+            getItem('01.请假申请流程', '709'),
+            getItem('02.加班申请流程', '323'),
+        ]),
+        getItem('财务管理类', 'sub2', [
 
-const items = [
-    getItem('人事管理类', 'sub1', [
-        getItem('01.请假申请流程', '709'),
-        getItem('02.加班申请流程', '323'),
-    ]),
-    getItem('财务管理类', 'sub2', [
+        ]),
+        getItem('市场采购类', 'sub3', [
 
-    ]),
-    getItem('市场采购类', 'sub3', [
+        ]),
+        getItem('运营业务流程', 'sub4', [
+            getItem('01.申请测试金', '799'),
+            getItem('02.申请冻结/解冻用户', '810'),
+            getItem('03.申请调整玩家场馆限红', '819'),
+        ]),
+    ];
 
-    ]),
-    getItem('运营业务流程', 'sub4', [
-        getItem('01.申请测试金', '799'),
-        getItem('02.申请冻结/解冻用户', '810'),
-        getItem('03.申请调整玩家场馆限红', '819'),
-    ]),
-];
+    const rootSubmenuKeys = ['sub1', 'sub2', 'sub3', 'sub4'];
 
-const rootSubmenuKeys = ['sub1', 'sub2', 'sub3', 'sub4'];
-function Create({ openCreatePage }) {
-    const [openKeys, setOpenKeys] = useState(['sub1']);
+    const [openKeys, setOpenKeys] = useState(['sub4']);
+    const navigate = useNavigate();
     const onOpenChange = (keys) => {
         const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
         if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
@@ -40,7 +42,8 @@ function Create({ openCreatePage }) {
         }
     };
     const onClickPage = ({ key }) => {
-        openCreatePage("f" + key);
+        navigate("/f" + key);
+
     }
     return (
         <div id="create">

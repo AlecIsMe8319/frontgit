@@ -1,18 +1,18 @@
 import React from 'react';
 import { FloatButton } from 'antd';
 import { FileTextOutlined, PlusOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
 
-
-function CreateFloatButton({ onPageOpen }) {
-
+function CreateFloatButton() {
+    let navigate = useNavigate();
     function doCallTodo() {
-        onPageOpen("todo");
+        navigate("/todo");
     }
     function doCallDone() {
-        onPageOpen("done");
+        navigate("/done");
     }
     function doCallCreate() {
-        onPageOpen("create");
+        navigate("/create");
     }
     return (
         <FloatButton.Group>
