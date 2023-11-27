@@ -13,6 +13,8 @@ import F799 from "./components/Sub4/F799";
 import F810 from "./components/Sub4/F810";
 import F819 from "./components/Sub4/F819";
 
+import F798 from "./components/Sub5/F798";
+
 function MainPage() {
     const tgId = "5173339107";
     return (
@@ -28,6 +30,7 @@ function MainPage() {
                         <Route path="*" element={<NoPage />} />
                         <Route path="f323" element={<F323 />} />
                         <Route path="f709" element={<F709 />} />
+                        <Route path="f798" element={<F798 />} />
                         <Route path="f799" element={<F799 />} />
                         <Route path="f810" element={<F810 />} />
                         <Route path="f819" element={<F819 />} />
